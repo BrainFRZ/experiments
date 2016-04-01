@@ -17,34 +17,33 @@ public class LanguageJumbler {
                 + "was inside he tore it open. Inside\nwas a note, \"Ha Ha! There's no real "
                 + "treasure You retarded egg goblin!!\" With that note, Jerry and the midgets "
                 + "turned\npurple and floated into outer space, doomed to wander the universe.12345";
-        final String text2 = "pizza";
 
-        System.out.println("Original text: " + text2);
-        System.out.println("\nJumbled text:  " + jumble(text2));
+        System.out.println("Original text:\n" + text);
+        System.out.println("\nJumbled text:\n" + jumble(text));
     }
 
     public static String jumble(String text) {
-        String jumble = "";
+        StringBuilder jumble = new StringBuilder();
         Random generator = new Random();
 
         for (int i = 0; i < text.length(); i++) {
             char ch = text.charAt(i);
             if (Character.isLetter(ch)) {
                 if (Character.isUpperCase(ch)) {
-                    jumble += (char)('A' + generator.nextInt(26));
+                    jumble.append((char)('A' + generator.nextInt(26)));
                 }
                 else {
-                    jumble += (char)('a' + generator.nextInt(26));
+                    jumble.append((char)('a' + generator.nextInt(26)));
                 }
             }
             else if (Character.isDigit(ch)) {
-                jumble += (char)('0' + generator.nextInt(10));
+                jumble.append((char)('0' + generator.nextInt(10)));
             }
             else {
-                jumble += text.charAt(i);
+                jumble.append(text.charAt(i));
             }
         }
 
-        return jumble;
+        return jumble.toString();
     }
 }

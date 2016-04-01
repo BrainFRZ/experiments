@@ -2,7 +2,7 @@ package experiments.wordwrap;
 
 public class WordWrap {
     private static String wordWrap(String text, int width, String delim) {
-        String out = "";
+        StringBuilder out = new StringBuilder();
         String[] words;
         int currentWidth = 0;
 
@@ -14,18 +14,18 @@ public class WordWrap {
         for (String word : words) {
             if (word.length() >= width) {
                 //If it's not the first word, put it on a new line
-                if (!out.isEmpty()) {
-                    out += "\n";
+                if (out.length() == 0) {
+                    out.append('\n');
                 }
-                out += word + " ";
+                out.append(word).append(' ');
                 currentWidth = word.length();
             }
             else if ((currentWidth + word.length()) <= width) {
-                out += word + " ";
+                out.append(word).append(' ');
                 currentWidth += word.length() + 1;
             } else {
-                out = out.substring(0, out.length() - 1);
-                out += "\n" + word + " ";
+                out.delete(out.length() - 1, out.length());
+                out.append('\n').append(word).append(' ');
                 currentWidth = word.length() + 1;
             }
         }
@@ -38,17 +38,16 @@ public class WordWrap {
     }
 
     public static String drawBox(String text, int width) {
-        String out;
-        String border;
+        StringBuilder out = new StringBuilder();
         String[] lines;
 
-        border = " ";
+        StringBuilder border = new StringBuilder(" ");
         for (int i = 0; i < (width - 2); i++) {
-            border += "-";
+            border.append("-");
         }
-        border += " \n";
+        border.append(" \n");
 
-        out = border;
+        out.append(border);
 
         if (width < 5) {
             width = 5;
@@ -56,22 +55,22 @@ public class WordWrap {
         width -= 4;
         lines = wordWrap(text, width).split("\n");
         for (String line : lines) {
-            out += String.format("| %-" + width + "s |\n", line);
+            out.append(String.format("| %-" + width + "s |\n", line));
         }
 
-        out += border;
+        out.append(border);
 
-        return out;
+        return out.toString();
     }
 
     public static String drawBoxes(String[] messages, int width) {
-        String out = "";
+        StringBuilder out = new StringBuilder();
         String[] boxes = new String[messages.length];
         String[][] lines;   //String[box's full string][array of box's string split at new line]
         int maxBoxLines = 0;
 
         if (messages.length == 1) {
-            out = drawBox(messages[0], width);
+            out.append(drawBox(messages[0], width));
         }
         else {
             width = width / messages.length - 1;
@@ -93,27 +92,27 @@ public class WordWrap {
             }
 
             for (int l = 0; l < maxBoxLines; l++) {
-                String currentLine = "";
+                StringBuilder currentLine = new StringBuilder();
                 for (int b = 0; b < boxes.length; b++) {
                     if (l >= lines[b].length) {
-                        currentLine += String.format("%" + width + "s ", "");
+                        currentLine.append(String.format("%" + width + "s ", ""));
                     }
                     else {
-                        currentLine += lines[b][l] + " ";
+                        currentLine.append(lines[b][l]).append(" ");
                     }
                 }
-                out += currentLine.substring(0, currentLine.length() - 1) + "\n";
+                out.append(currentLine.substring(0, currentLine.length() - 1)).append("\n");
             }
         }
 
-        return out;
+        return out.toString();
     }
 
     public static String drawBoxes(String[] messages, int width, int boxesWide) {
-        String out = "";
+        StringBuilder out = new StringBuilder();
 
         if (messages.length <= boxesWide) {
-            out = WordWrap.drawBoxes(messages, width);
+            out.append(WordWrap.drawBoxes(messages, width));
         }
         else {
             int currentBox = 0;
@@ -131,7 +130,7 @@ public class WordWrap {
                     currentBox++;
                 }
 
-                out += WordWrap.drawBoxes(currentMessages, width) + "\n";
+                out.append(WordWrap.drawBoxes(currentMessages, width)).append("\n");
             }
         }
 
