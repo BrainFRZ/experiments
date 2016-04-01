@@ -28,7 +28,7 @@ public class EmoteParser {
             boolean found = true;
             do {
                 quote2Location = emote.indexOf('"', quote1Location + 1);
-                if (quote2Location == -1) {
+                if (quote2Location == -1 || quote2Location < currentIndex) {
                     ret.append(emote.substring(currentIndex));
                     found = false;
                 }
@@ -39,10 +39,6 @@ public class EmoteParser {
                     currentIndex = quote2Location;
 
                     quote1Location = emote.indexOf('"', currentIndex + 1);
-                    if (quote1Location == -1) {
-                        ret.append(emote.substring(currentIndex));
-                        found = false;
-                    }
                 }
             } while (found);
         }
