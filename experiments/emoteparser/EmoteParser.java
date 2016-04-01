@@ -29,9 +29,7 @@ public class EmoteParser {
             do {
                 quote2Location = emote.indexOf('"', quote1Location + 1);
                 if (quote2Location == -1) {
-                    if (quote2Location != emote.length() - 2) {
-                        ret.append(emote.substring(currentIndex));
-                    }
+                    ret.append(emote.substring(currentIndex));
                     found = false;
                 }
                 else {
