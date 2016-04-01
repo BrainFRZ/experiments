@@ -1,0 +1,15 @@
+#Executables
+*.class
+*.jar
+
+#Compressed files
+*.7z
+*.zip
+
+#Unnecessary Netbeans directories
+*/build/*
+*/dist/*
+*/nbproject/*
+*/test/*
+*.xml
+*.mf
